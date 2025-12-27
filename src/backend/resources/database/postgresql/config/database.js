@@ -1,5 +1,4 @@
 import { Client } from "pg";
-const databaseEnable = false;
 export default {
     query: executeQuery,
 };
@@ -13,21 +12,27 @@ async function executeQuery(query) {
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
         });
-        await client.connect();
 
-        // return client.query(query).then(
-        //     (queryResult) => {
-        //         client.end();
-        //         return queryResult;
-        //     },
-        //     (error) => {
-        //         client.end();
-        //         throw error;
-        //     },
-        // );
-
-        const response = await client.query(query);
-        await client.end();
-        return response;
+        try {
+            // return client.query(query).then(
+            //     (queryResult) => {
+            //         client.end();
+            //         return queryResult;
+            //     },
+            //     (error) => {
+            //         client.end();
+            //         throw error;
+            //     },
+            // );
+            await client.connect();
+            const response = await client.query(query);
+            await client.end();
+            return response;
+        } catch (error) {
+            console.log("Database query error:", error);
+            throw error;
+        } finally {
+            await client.end();
+        }
     }
 }
