@@ -30,7 +30,6 @@ async function executeQuery(query) {
             return response;
         } catch (error) {
             console.log("Database query error:", error);
-            throw error;
         } finally {
             await client.end();
         }

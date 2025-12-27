@@ -17,16 +17,24 @@ class HealthcheckService {
     }
 
     async _getDatabaseHealthData() {
+        const response = {};
         const isDatabaseEnabled = this.healthRepository.isDatabaseEnabled();
+
+        response.enabled = isDatabaseEnabled;
         if (!isDatabaseEnabled) {
-            return {
-                enabled: false,
-            };
+            return response;
+        }
+
+        const isDatabaseConnected =
+            await this.healthRepository.isDatabaseConnected();
+
+        response.connected = isDatabaseConnected;
+        if (!isDatabaseConnected) {
+            return response;
         }
 
         return {
-            enabled: isDatabaseEnabled,
-            connected: await this.healthRepository.isDatabaseConnected(),
+            ...response,
             version: await this.healthRepository.getDatabaseVersion(),
             max_connections: await this.healthRepository.getMaxConnections(),
             current_connections:
