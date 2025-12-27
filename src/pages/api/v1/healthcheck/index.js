@@ -2,8 +2,8 @@ import HealthController from "src/backend/application/controller/HealthControlle
 
 const healthController = new HealthController();
 
-function status(request, response) {
-    healthController.applicationStatus(request, response);
+async function healthcheck(request, response) {
+    await healthController.applicationStatus(request, response);
 }
 
-export default status;
+export default healthcheck;

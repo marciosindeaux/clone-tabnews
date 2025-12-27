@@ -1,17 +1,14 @@
-import database from "src/backend/resources/database/postgresql/config/database.js";
+import HealthcheckService from "../../domain/services/healthcheck/HealthcheckService";
 
 class HealthController {
-    constructor() {}
+    constructor() {
+        this.healthcheckService = new HealthcheckService();
+    }
 
     async applicationStatus(req, resp) {
-        const response = await database.query("SELECT 1 + 1;");
-        const status = {
-            application: "OK",
-            database: {
-                status: response ? "UP" : "DOWN",
-            },
-        };
-        resp.status(200).json(status);
+        const healthResponse =
+            await this.healthcheckService.generateHealthStatus();
+        resp.status(200).json(healthResponse);
     }
 }
 
