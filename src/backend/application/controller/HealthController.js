@@ -1,4 +1,4 @@
-import database from "../../resources/database/postgresql/config/database.js";
+import database from "src/backend/resources/database/postgresql/config/database.js";
 
 class HealthController {
     constructor() {}

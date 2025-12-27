@@ -5,7 +5,6 @@ export default {
 };
 
 async function executeQuery(query) {
-    console.log(process.env);
     if (process.env.DATABASE_ENABLED === "true") {
         const client = new Client({
             host: process.env.POSTGRES_HOST,

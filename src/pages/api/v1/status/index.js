@@ -1,4 +1,4 @@
-import HealthController from "../../../../backend/application/controller/HealthController.js";
+import HealthController from "src/backend/application/controller/HealthController.js";
 
 const healthController = new HealthController();
 
